@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blessed Intercessors Ministry (BIM)</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* GENERAL STYLES */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgba(255, 255, 255, 0.945);
+}
+
+.wrapper {
+    max-width: 1200px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    background: #ffffff;
+    position: relative;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    width: 55px;
+    height: auto;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.logo-text span {
+    font-size: 12px;
+    display: block;
+    font-weight: normal;
+    color: #666;
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: red;
+}
+
+.contact-btn {
+    background: rgb(255, 154, 2);
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* HAMBURGER ICON (for mobile) */
+.hamburger {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* HERO SECTION */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+        url('BIM logo.png');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 80px 60px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.hero h1 span {
+    background: rgb(255, 154, 2);
+    padding: 6px 12px;
+    border: 1px solid rgb(255, 154, 2);
+    border-radius: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.hero a {
+    display: inline-block;
+    margin-top: 20px;
+    background: rgb(255, 154, 2);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* CARDS SECTION */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 60px 30px;
+    background: #f3f3f3;
+}
+
+.card {
+    background: #fff;
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.card i {
+    font-size: 40px;
+    color: rgb(255, 154, 2);
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #666;
+    font-size: 15px;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 15px;
+    background: rgb(255, 154, 2);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+/* RESPONSIVE NAVBAR */
+@media(max-width:768px){
+    .hamburger { display: block; }
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        background: #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        border-radius: 8px;
+        overflow: hidden;
+        z-index: 1000;
+    }
+    .nav-links a {
+        padding: 10px 15px;
+        border-bottom: 1px solid #eee;
+        width: 100%;
+    }
+    .nav-links a:last-child { border-bottom: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="logo">
+            <img src="BIM logo.png" alt="BIM Logo">
+            <div class="logo-text">
+                BLESSED INTERCESSORS MINISTRY
+                <span>Solution Ground</span>
+            </div>
+        </div>
+
+        <div class="hamburger" onclick="toggleNav()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+        <div class="nav-links">
+            <a href="about.html"><b>About Us</b></a>
+            <a href="getinvolved.html"><b>Get Involved</b></a>
+            <a href="giving.html"><b>Giving</b></a>
+            <a href="contactus.html" class="contact-btn"><b>Contact Us</b></a>
+        </div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero">
+        <h1>WELCOME TO <span>BIM</span></h1>
+        <p>
+            Blessed Intercessors Ministry (BIM) is a Solution Ground where Jesus reigns mightly in our midst.
+        </p>
+        <a href="planavisit.html">Plan a Visit »</a>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <i class="fa-solid fa-comments"></i>
+            <h3>Midweek Prayers</h3>
+            <p>Join us during the week for powerful prayer and fellowship.</p>
+            <a href="https://web.facebook.com/blessedbimpage?__tn__=%2Cd">See what’s on »</a>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-hands-praying"></i>
+            <h3>Loving & Giving</h3>
+            <p>Serving God and humanity through love, sacrifice, and faith.</p>
+            <a href="giving.html">Give Now »</a>
+        </div>
+
+        <div class="card">
+            <i class="fa-solid fa-church"></i>
+            <h3>Our Sermons</h3>
+            <p>Watch and listen to inspiring sermons that build faith.</p>
+            <a href="https://web.facebook.com/blessedbimpage?__tn__=%2Cd">Watch now »</a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function toggleNav(){
+    const nav = document.querySelector('.nav-links');
+    if(nav.style.display === 'flex'){
+        nav.style.display = 'none';
+    } else {
+        nav.style.display = 'flex';
+    }
+}
+</script>
+
+</body>
+</html>

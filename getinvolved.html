@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Involved - BIM</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+}
+
+.container {
+    width: 95%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+h1, h2 {
+    color: rgb(255,154,2);
+    margin-bottom: 25px;
+    animation: fadeSlide 1s ease-out;
+}
+
+h1 { font-size: 32px; }
+h2 { font-size: 24px; margin-top: 40px; }
+
+.card {
+    background: #fff9f0;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeUp 1s forwards;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.card i {
+    font-size: 26px;
+    color: rgb(255,154,2);
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+.card-content {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    max-width: 650px;
+}
+
+.card-content p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgb(255,154,2);
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+.btn:hover {
+    background: #256628;
+}
+
+/* Animations */
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlide {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+</style>
+
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Get Involved with BIM</h1>
+    <p>Join us in making a difference. Choose how you would like to participate, support, or engage with our ministry.</p>
+
+    <!-- Volunteering -->
+    <div class="card" style="animation-delay:0.1s;">
+        <i class="fas fa-hands-helping"></i>
+        <div class="card-content">
+            <h2>Volunteering Opportunities</h2>
+            <p>Help with church events, outreach programs, community services, and administrative support.</p>
+            <a href="#" class="btn" onclick="sendEmail('Volunteer')">
+                <i class="fas fa-user-plus"></i> Volunteer Now
+            </a>
+        </div>
+    </div>
+
+    <!-- Donations -->
+    <div class="card" style="animation-delay:0.2s;">
+        <i class="fas fa-donate"></i>
+        <div class="card-content">
+            <h2>Support & Donations</h2>
+            <p>Support the ministry through financial giving, donations of items, or professional services.</p>
+            <a href="#" class="btn" onclick="donationPage()">
+                <i class="fas fa-heart"></i> Donate
+            </a>
+        </div>
+    </div>
+
+    <!-- Awareness & Advocacy -->
+    <div class="card" style="animation-delay:0.5s;">
+        <i class="fas fa-bullhorn"></i>
+        <div class="card-content">
+            <h2>Awareness & Advocacy</h2>
+            <p>Help spread the word about BIM by sharing our programs, events, and mission.</p>
+            <a href="https://web.facebook.com/blessedbimpage" target="_blank" class="btn">
+                <i class="fab fa-facebook"></i> Share
+            </a>
+        </div>
+    </div>
+
+    <!-- Training -->
+    <div class="card" style="animation-delay:0.6s;">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <div class="card-content">
+            <h2>Training & Mentorship</h2>
+            <p>Grow spiritually and practically through leadership training, mentorship, and discipleship.</p>
+            <a href="#" class="btn" onclick="sendEmail('Training')">
+                <i class="fas fa-graduation-cap"></i> Get Trained
+            </a>
+        </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="card" style="animation-delay:0.8s;">
+        <i class="fab fa-whatsapp"></i>
+        <div class="card-content">
+            <h2>Contact Us on WhatsApp</h2>
+            <p>Have questions or want to get involved? Chat with us directly on WhatsApp for guidance and support.</p>
+            <a href="#" class="btn" onclick="openWhatsApp()">
+                <i class="fab fa-whatsapp"></i> WhatsApp Us
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+function getFullName() {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user || !user.name) {
+        alert("Please log in or sign up with your real full name before proceeding.");
+        return null;
+    }
+    return user.name;
+}
+
+function sendEmail(type) {
+    const name = getFullName();
+    if (!name) return;
+
+    const subject = encodeURIComponent(type + " Request");
+    const body = encodeURIComponent(
+        `Dear BIM Team,\n\n` +
+        `My name is ${name}.\n\n` +
+        `I would like to ${type.toLowerCase()} with Blessed Intercessors Ministry.\n\n` +
+        `Please guide me on the next steps.\n\n` +
+        `God bless,\n${name}`
+    );
+
+    window.location.href =
+        `mailto:blessedintercessorsministrybim@gmail.com?subject=${subject}&body=${body}`;
+}
+
+function openWhatsApp() {
+    const name = getFullName();
+    if (!name) return;
+
+    const message = encodeURIComponent(
+        `Hello BIM Team,\n\n` +
+        `My name is ${name}. I have a question / would like to get involved with the ministry.\n\n` +
+        `Please guide me. God bless.`
+    );
+
+    window.location.href = `https://wa.me/2348100986621?text=${message}`;
+}
+
+function donationPage() {
+    const name = getFullName();
+    if (!name) return;
+
+    // Ask for reason before opening giving.html
+    const reason = prompt("Please enter the reason for your donation (e.g., Church event, Outreach, etc.):");
+    if (!reason || reason.trim() === "") {
+        alert("Donation reason is required.");
+        return;
+    }
+
+    // Store donation reason temporarily for use in giving.html
+    sessionStorage.setItem("donationReason", reason);
+
+    // Open giving.html
+    window.location.href = "giving.html";
+}
+</script>
+
+</body>
+</html>

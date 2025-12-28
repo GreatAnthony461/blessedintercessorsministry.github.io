@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIM Membership Registration</title>
+<style>
+/* RESET */
+* { box-sizing: border-box; margin:0; padding:0; }
+
+/* BODY */
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* CONTAINER */
+.container {
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    width:100%;
+    max-width:520px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    text-align:center;
+    position:relative;
+}
+
+/* TITLES */
+h2 { color: rgb(255,154,2); margin-bottom:20px; font-size: 1.6rem; }
+h3 { font-size:1.3rem; margin-bottom:15px; }
+
+/* STEPS */
+.step { display:none; }
+.step.active { display:block; }
+
+/* FORM ELEMENTS */
+label { font-weight:bold; margin-top:10px; display:block; text-align:left; font-size:0.95rem; }
+input, select {
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    border-radius:8px;
+    border:1px solid #ccc;
+    font-size:0.95rem;
+}
+button {
+    width:100%;
+    padding:12px;
+    margin-top:18px;
+    border-radius:8px;
+    border:none;
+    background: rgb(255,154,2);
+    color:#fff;
+    font-size:16px;
+    cursor:pointer;
+    transition: background 0.3s;
+}
+button:hover { background:#e08a00; }
+
+/* ERROR & PROCESSING */
+.error { color:red; font-size:14px; margin-top:8px; text-align:left; }
+.processing { color:rgb(255,154,2); font-weight:bold; margin-top:10px; display:none; text-align:center; }
+
+/* PREVIEW IMAGE */
+.preview img { width:100px; height:100px; border-radius:50%; margin-bottom:10px; object-fit:cover; }
+
+/* PASSWORD TOGGLE */
+.toggle-pass {
+    cursor:pointer;
+    position:absolute;
+    right:15px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:14px;
+    color:rgba(0,0,0,0.5);
+}
+
+/* INPUT CONTAINER FOR TOGGLE */
+.input-container { position:relative; width:100%; margin-top:5px; }
+
+/* SWITCH LINKS */
+.switch-link {
+    margin-top:15px;
+    font-size:14px;
+    cursor:pointer;
+    color:rgb(255,154,2);
+    text-decoration:underline;
+    display:block;
+    text-align:center;
+}
+
+/* MEDIA QUERIES FOR SMALL SCREENS */
+@media (max-width:480px){
+    .container { padding:20px; }
+    h2 { font-size:1.4rem; }
+    h3 { font-size:1.1rem; }
+    input, select { padding:10px; font-size:0.9rem; }
+    button { padding:10px; font-size:15px; }
+    .preview img { width:80px; height:80px; }
+    .toggle-pass { font-size:12px; right:10px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2 id="formTitle">BIM Membership Registration</h2>
+
+<!-- STEP 1 -->
+<div class="step active" id="step1">
+    <label>Full Name</label>
+    <input id="name">
+    <label>Email</label>
+    <input id="email" type="email">
+    <label>Phone</label>
+    <input id="phone">
+    <label>Date of Birth</label>
+    <input id="dob" type="date">
+    <label>Gender</label>
+    <select id="gender">
+        <option value="">Select</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+    </select>
+    <div class="error" id="err1"></div>
+    <button onclick="goToPhoto()">Next</button>
+    <div class="switch-link" onclick="showLogin()">Already registered? Login</div>
+</div>
+
+<!-- STEP 2: Photo -->
+<div class="step" id="step2">
+    <label>Upload Human Picture</label>
+    <input type="file" id="photo" accept="image/*">
+    <div class="preview" id="photoPreview"></div>
+    <div class="error" id="photoErr"></div>
+    <div class="processing" id="photoProcessing">Detecting face, please wait...</div>
+    <button onclick="validatePhoto()">Next</button>
+</div>
+
+<!-- STEP 3: Password -->
+<div class="step" id="step3">
+    <label>Password</label>
+    <div class="input-container">
+        <input type="password" id="password" placeholder="Enter password (min 6 chars)">
+        <span class="toggle-pass" onclick="togglePass('password')">Show</span>
+    </div>
+    <label>Confirm Password</label>
+    <div class="input-container">
+        <input type="password" id="confirm" placeholder="Confirm your password">
+        <span class="toggle-pass" onclick="togglePass('confirm')">Show</span>
+    </div>
+    <div class="error" id="passErr"></div>
+    <div class="processing" id="passProcessing">Validating password...</div>
+    <button onclick="validatePassword()">Next</button>
+</div>
+
+<!-- STEP 4: Summary -->
+<div class="step" id="step4">
+    <h3>Confirm your information</h3>
+    <div class="preview" id="summary"></div>
+    <button onclick="finalSubmit()">Yes, I Agree</button>
+    <button onclick="showStep('step1')">Edit Info</button>
+    <div class="processing" id="submitProcessing">Submitting registration, please wait...</div>
+</div>
+
+<!-- LOGIN -->
+<div class="step" id="loginStep">
+    <label>Email</label>
+    <input id="loginEmail" type="email">
+    <label>Password</label>
+    <div class="input-container">
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+        <span class="toggle-pass" onclick="togglePass('loginPassword')">Show</span>
+    </div>
+    <div class="error" id="loginErr"></div>
+    <button onclick="loginUser()">Login</button>
+    <div class="processing" id="loginProcessing">Logging in, please wait...</div>
+    <div class="switch-link" onclick="showRegister()">Don't have an account? Register</div>
+    <div class="switch-link" onclick="forgotPassword()">Forgot Password?</div>
+</div>
+
+</div>
+
+<script>
+// --- SCRIPT FUNCTIONALITY ---
+let imageData = "";
+
+// Show step
+function showStep(id){
+    document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+}
+
+// Toggle password
+function togglePass(id){
+    const input = document.getElementById(id);
+    input.type = input.type==='password'?'text':'password';
+}
+
+// Show login/register
+function showLogin(){ showStep('loginStep'); document.getElementById('formTitle').textContent="Login"; }
+function showRegister(){ showStep('step1'); document.getElementById('formTitle').textContent="BIM Membership Registration"; }
+
+// STEP 1 -> STEP 2
+function goToPhoto(){
+    const fields = ['name','email','phone','dob','gender'];
+    let valid = true;
+    fields.forEach(f=>{ if(!document.getElementById(f).value.trim()) valid=false; });
+    const errDiv = document.getElementById('err1');
+    if(!valid){ errDiv.textContent="All fields are required"; return; }
+
+    let users = JSON.parse(localStorage.getItem('users') || "[]");
+    const emailVal = document.getElementById('email').value.trim();
+    const phoneVal = document.getElementById('phone').value.trim();
+    const existing = users.find(u => u.email===emailVal || u.phone===phoneVal);
+    if(existing){
+        errDiv.textContent = `Account exists for ${existing.name}. Redirecting to login...`;
+        errDiv.style.color="green";
+        setTimeout(()=>{
+            showLogin();
+            document.getElementById('loginEmail').value=existing.email;
+        },800);
+        return;
+    }
+    errDiv.textContent='';
+    showStep('step2');
+}
+
+// STEP 2: Photo preview
+const photoInput = document.getElementById('photo');
+photoInput.addEventListener('change',()=>{
+    const file = photoInput.files[0];
+    if(!file){ document.getElementById('photoErr').textContent="Select a photo"; return; }
+    const reader = new FileReader();
+    reader.onload=e=>{
+        imageData=e.target.result;
+        document.getElementById('photoPreview').innerHTML=`<img src="${imageData}" />`;
+        document.getElementById('photoErr').textContent='';
+    };
+    reader.readAsDataURL(file);
+});
+function validatePhoto(){
+    if(!imageData){ document.getElementById('photoErr').textContent="Upload a photo"; return; }
+    document.getElementById('photoProcessing').style.display='block';
+    setTimeout(()=>{
+        document.getElementById('photoProcessing').style.display='none';
+        showStep('step3');
+    },1000);
+}
+
+// STEP 3 -> STEP 4
+function validatePassword(){
+    const pass = document.getElementById('password').value.trim();
+    const confirm = document.getElementById('confirm').value.trim();
+    const err = document.getElementById('passErr');
+    err.textContent='';
+    if(pass.length<6){ err.textContent="Password too short"; return; }
+    if(pass!==confirm){ err.textContent="Passwords do not match"; return; }
+    document.getElementById('passProcessing').style.display='block';
+    setTimeout(()=>{
+        document.getElementById('passProcessing').style.display='none';
+        const summary = document.getElementById('summary');
+        summary.innerHTML=`<img src="${imageData}" /><p><b>Name:</b> ${document.getElementById('name').value}</p>
+        <p><b>Email:</b> ${document.getElementById('email').value}</p>
+        <p><b>Phone:</b> ${document.getElementById('phone').value}</p>
+        <p><b>DOB:</b> ${document.getElementById('dob').value}</p>
+        <p><b>Gender:</b> ${document.getElementById('gender').value}</p>`;
+        showStep('step4');
+    },500);
+}
+
+// FINAL SUBMIT
+function finalSubmit(){
+    document.getElementById('submitProcessing').style.display='block';
+    setTimeout(()=>{
+        document.getElementById('submitProcessing').style.display='none';
+        let users = JSON.parse(localStorage.getItem('users') || "[]");
+        users.push({
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            password: document.getElementById('password').value.trim()
+        });
+        localStorage.setItem('users', JSON.stringify(users));
+        alert(`Registration successful! Welcome, ${document.getElementById('name').value}`);
+        location.href="home.html";
+    },1500);
+}
+
+// LOGIN
+function loginUser(){
+    const email=document.getElementById('loginEmail').value.trim();
+    const pass=document.getElementById('loginPassword').value.trim();
+    const err=document.getElementById('loginErr');
+    err.textContent='';
+    if(!email || !pass){ err.textContent="All fields required"; return; }
+
+    const users = JSON.parse(localStorage.getItem('users') || "[]");
+    const user = users.find(u=>u.email===email && u.password===pass);
+    if(user){
+        alert(`Welcome back, ${user.name}`);
+        location.href="home.html";
+    } else { err.textContent="Invalid credentials"; }
+}
+
+// FORGOT PASSWORD
+function forgotPassword(){
+    const email=prompt("Enter your registered email:");
+    if(!email) return;
+    const users = JSON.parse(localStorage.getItem('users') || "[]");
+    const user = users.find(u=>u.email===email);
+    if(!user){ alert("Email not found"); return; }
+
+    const newPass=prompt("Enter new password (min 6 chars):");
+    if(!newPass || newPass.length<6){ alert("Password too short"); return; }
+    const confirmPass=prompt("Confirm new password:");
+    if(newPass!==confirmPass){ alert("Passwords do not match"); return; }
+
+    user.password=newPass;
+    localStorage.setItem('users', JSON.stringify(users));
+    alert(`Password reset successful for ${user.name}`);
+    showLogin();
+    document.getElementById('loginEmail').value=email;
+}
+</script>
+
+</body>
+</html>

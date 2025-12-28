@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - BIM</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 700px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+}
+
+/* Title */
+h2 {
+    color: rgb(255,154,2);
+    margin-bottom: 30px;
+    font-size: 32px;
+    animation: fadeSlide 1s ease-out;
+}
+
+/* Contact Cards */
+.contact-card {
+    background: #fff9f0;
+    border-radius: 12px;
+    padding: 25px 20px;
+    margin: 15px 0;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    opacity: 0;
+    animation: fadeUp 1s forwards;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.contact-card i {
+    font-size: 28px;
+    color: rgb(255,154,2);
+    vertical-align: middle;
+}
+
+.contact-info {
+    text-align: left;
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+/* Links */
+.contact-link {
+    color: rgb(0,102,204);
+    text-decoration: none;
+}
+
+.contact-link:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeSlide {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 28px;
+        margin-bottom: 25px;
+    }
+    .contact-card {
+        padding: 20px 15px;
+        gap: 12px;
+    }
+    .contact-card i {
+        font-size: 24px;
+    }
+    .contact-info {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .contact-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 15px;
+        gap: 10px;
+    }
+    .contact-card i {
+        font-size: 22px;
+    }
+    .contact-info {
+        font-size: 15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Contact Us</h2>
+
+    <!-- Location -->
+    <div class="contact-card" style="animation-delay:0.1s;" 
+         onclick="window.open(isMobile()? 'geo:6.5163,3.3580?q=Elemu Bus Stop,29 Sola Adewumi Street' 
+                                         : 'https://www.google.com/maps?q=Elemu+Bus+Stop,+29+Sola+Adewumi+Street,+Lagos,+Nigeria', '_blank')">
+        <i class="fas fa-map-marker-alt"></i>
+        <div class="contact-info">
+            <strong>Location:</strong> Elemu Bus Stop, 29 Sola Adewumi Street, Lagos, Nigeria
+        </div>
+    </div>
+
+    <!-- Call -->
+    <div class="contact-card" style="animation-delay:0.2s;" onclick="window.location='tel:+2348138871992'">
+        <i class="fas fa-phone-alt"></i>
+        <div class="contact-info">
+            <strong>Call Us:</strong> +234 813 887 1992
+        </div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="contact-card" style="animation-delay:0.3s;" onclick="window.open('https://wa.me/2348100986621', '_blank')">
+        <i class="fab fa-whatsapp"></i>
+        <div class="contact-info">
+            <strong>WhatsApp:</strong> +234 810 098 6621
+        </div>
+    </div>
+
+    <!-- Facebook -->
+    <div class="contact-card" style="animation-delay:0.4s;" onclick="openFacebook()">
+        <i class="fab fa-facebook"></i>
+        <div class="contact-info">
+            <strong>Facebook:</strong> Blessed Intercessors Ministry
+        </div>
+    </div>
+
+    <!-- Email -->
+    <div class="contact-card" style="animation-delay:0.5s;" onclick="window.location='mailto:blessedintercessorsministrybim@gmail.com'">
+        <i class="fas fa-envelope"></i>
+        <div class="contact-info">
+            <strong>Email:</strong> blessedintercessorsministrybim@gmail.com
+        </div>
+    </div>
+
+</div>
+
+<script>
+function isMobile() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Open Facebook app if installed, otherwise fallback to web
+function openFacebook() {
+    const fbPage = 'blessedbimpage';
+    const appLink = 'fb://page/' + fbPage;
+    const webLink = 'https://www.facebook.com/' + fbPage;
+    const timeout = setTimeout(() => {
+        window.open(webLink, '_blank');
+    }, 500);
+    window.location = appLink;
+    window.addEventListener('blur', () => clearTimeout(timeout));
+}
+</script>
+
+</body>
+</html>
